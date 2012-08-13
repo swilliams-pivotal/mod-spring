@@ -1,0 +1,17 @@
+// This is a single project
+
+apply plugin: 'java'
+
+repositories {
+    // maven { url 'http://repo.springsource.org/release' }
+    // maven { url 'http://dist.gemstone.com/maven/release' }
+    // maven { url 'http://download.java.net/maven/2' }
+    mavenCentral()
+}
+dependencies {
+	// deps
+}
+task wrapper(type: Wrapper, description: "Create a Gradle self-download wrapper") {
+    group = 'Project Setup'
+    gradleVersion = "$gradleVersion"
+}
