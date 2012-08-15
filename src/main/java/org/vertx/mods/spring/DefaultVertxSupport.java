@@ -13,5 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.vertx.mods.spring;
 
-rootProject.name='mod-spring'
+import org.vertx.java.core.Vertx;
+
+
+/**
+ * @author swilliams
+ *
+ */
+public class DefaultVertxSupport implements VertxSupport {
+
+  private Vertx vertx;
+
+  @Override
+  public void setVertx(Vertx vertx) {
+    this.vertx = vertx;
+  }
+
+  @Override
+  public Vertx getVertx() {
+    return vertx;
+  }
+
+}

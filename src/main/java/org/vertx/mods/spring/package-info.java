@@ -13,5 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-rootProject.name='mod-spring'
+/**
+ * @author swilliams
+ *
+ */
+package org.vertx.mods.spring;
