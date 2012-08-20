@@ -16,10 +16,9 @@
 package org.vertx.mods.spring.beans;
 
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.Lifecycle;
-import org.springframework.util.Assert;
 import org.vertx.java.core.Handler;
+import org.vertx.java.core.Vertx;
 import org.vertx.java.core.eventbus.Message;
 import org.vertx.mods.spring.VertxSupport;
 
@@ -28,23 +27,21 @@ import org.vertx.mods.spring.VertxSupport;
  * @author swilliams
  *
  */
-public class Echo implements InitializingBean, Lifecycle {
+public class Echo implements InitializingBean, Lifecycle, VertxSupport {
 
   private static final String TEST_ADDRESS = "vertx.test.echo";
-
-  private VertxSupport vertxSupport;
 
   private boolean running;
 
   private String handlerId;
 
+  private Vertx vertx;
+
   @Override
   public void start() {
     System.out.println("start()");
 
-    Assert.notNull(vertxSupport, "VertxSupport should be injected!");
-
-    this.handlerId = vertxSupport.getVertx().eventBus().registerHandler(TEST_ADDRESS, new Handler<Message<String>>() {
+    this.handlerId = getVertx().eventBus().registerHandler(TEST_ADDRESS, new Handler<Message<String>>() {
       @Override
       public void handle(Message<String> event) {
         System.out.println("echo.body: " + event.body);
@@ -58,7 +55,7 @@ public class Echo implements InitializingBean, Lifecycle {
   @Override
   public void stop() {
     System.out.println("stop()");
-    vertxSupport.getVertx().eventBus().unregisterHandler(handlerId);
+    getVertx().eventBus().unregisterHandler(handlerId);
     this.running = false;
   }
 
@@ -73,13 +70,13 @@ public class Echo implements InitializingBean, Lifecycle {
     System.out.println("afterPropertiesSet()");
   }
 
-
-  public VertxSupport getVertxSupport() {
-    return vertxSupport;
+  @Override
+  public Vertx getVertx() {
+    return vertx;
   }
 
-  @Autowired
-  public void setVertxSupport(VertxSupport vertxSupport) {
-    this.vertxSupport = vertxSupport;
+  @Override
+  public void setVertx(Vertx vertx) {
+    this.vertx = vertx;
   }
 }

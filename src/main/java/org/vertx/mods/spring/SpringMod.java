@@ -15,6 +15,7 @@
  */
 package org.vertx.mods.spring;
 
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -42,13 +43,13 @@ public class SpringMod extends BusModBase {
     Assert.notNull(getContainer().getConfig(), "config object is null, which can't be good");
     String springConfig = getContainer().getConfig().getString("springConfig", "applicationConfig.xml");
 
-    DefaultVertxSupport vertxSupport = new DefaultVertxSupport();
-    vertxSupport.setVertx(vertx);
-
     parent = new GenericApplicationContext();
 
     ConfigurableListableBeanFactory factory = parent.getBeanFactory();
-    factory.registerSingleton("vertxSupport", vertxSupport);
+
+    BeanPostProcessor vertxSupportProcessor = new VertxSupportProcessor(vertx);
+    factory.addBeanPostProcessor(vertxSupportProcessor);
+    factory.registerSingleton("vertxSupport", new DefaultVertxSupport());
 
     parent.refresh();
     parent.start();
