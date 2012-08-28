@@ -19,6 +19,7 @@ public class VertxSupportProcessor implements BeanPostProcessor {
     if (bean instanceof VertxSupport) {
       VertxSupport vertxSupport = (VertxSupport) bean;
       vertxSupport.setVertx(vertx);
+      return vertxSupport;
     }
 
     return bean;

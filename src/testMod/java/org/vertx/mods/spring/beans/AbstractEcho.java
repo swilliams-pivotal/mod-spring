@@ -15,68 +15,46 @@
  */
 package org.vertx.mods.spring.beans;
 
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.context.Lifecycle;
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.util.Assert;
 import org.vertx.java.core.Handler;
 import org.vertx.java.core.Vertx;
 import org.vertx.java.core.eventbus.Message;
-import org.vertx.mods.spring.VertxSupport;
 
 
 /**
  * @author swilliams
  *
  */
-public class Echo implements InitializingBean, Lifecycle, VertxSupport {
-
-  private static final String TEST_ADDRESS = "vertx.test.echo";
-
-  private boolean running;
+public abstract class AbstractEcho implements DisposableBean {
 
   private String handlerId;
 
   private Vertx vertx;
 
-  @Override
-  public void start() {
-    System.out.println("start()");
+  protected void register(String address) throws Exception {
+    Assert.notNull(getVertx(), "Vertx must not be null");
 
-    this.handlerId = getVertx().eventBus().registerHandler(TEST_ADDRESS, new Handler<Message<String>>() {
+    this.handlerId = getVertx().eventBus().registerHandler(address, new Handler<Message<String>>() {
+
       @Override
       public void handle(Message<String> event) {
-        System.out.println("echo.body: " + event.body);
-        System.out.println("echo.replyAddress: " + event.replyAddress);
         event.reply(event.body);
       }});
-
-    this.running = true;
   }
 
-  @Override
-  public void stop() {
-    System.out.println("stop()");
-    getVertx().eventBus().unregisterHandler(handlerId);
-    this.running = false;
-  }
-
-  @Override
-  public boolean isRunning() {
-    System.out.println("isRunning()");
-    return running;
-  }
-
-  @Override
-  public void afterPropertiesSet() throws Exception {
-    System.out.println("afterPropertiesSet()");
-  }
-
-  @Override
   public Vertx getVertx() {
     return vertx;
   }
 
-  @Override
   public void setVertx(Vertx vertx) {
+    Assert.notNull(vertx, "Vertx must not be null");
     this.vertx = vertx;
   }
+
+  @Override
+  public void destroy() throws Exception {
+    getVertx().eventBus().unregisterHandler(handlerId);
+  }
+
 }

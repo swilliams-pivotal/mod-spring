@@ -17,7 +17,6 @@ package org.vertx.mods.spring;
 
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
@@ -29,7 +28,7 @@ import org.vertx.java.busmods.BusModBase;
  * @author swilliams
  *
  */
-public class SpringMod extends BusModBase {
+public abstract class SpringModBase extends BusModBase {
 
   private GenericApplicationContext parent;
 
@@ -38,30 +37,37 @@ public class SpringMod extends BusModBase {
   @Override
   public void start() {
 
+    super.start();
+
     Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
 
     Assert.notNull(getContainer().getConfig(), "config object is null, which can't be good");
     String springConfig = getContainer().getConfig().getString("springConfig", "applicationConfig.xml");
 
-    parent = new GenericApplicationContext();
-
-    ConfigurableListableBeanFactory factory = parent.getBeanFactory();
-
     BeanPostProcessor vertxSupportProcessor = new VertxSupportProcessor(vertx);
+    this.parent = new GenericApplicationContext();
+    ConfigurableListableBeanFactory factory = parent.getBeanFactory();
+    factory.registerSingleton("vertx", vertx);
     factory.addBeanPostProcessor(vertxSupportProcessor);
-    factory.registerSingleton("vertxSupport", new DefaultVertxSupport());
 
     parent.refresh();
     parent.start();
 
     if (springConfig.endsWith(".xml")) {
-      context = new GenericXmlApplicationContext();
+      this.context = new GenericXmlApplicationContext();
       context.setParent(parent);
+
+      factory = context.getBeanFactory();
+      factory.addBeanPostProcessor(vertxSupportProcessor);
+
       ((GenericXmlApplicationContext) context).load(springConfig);
     }
     else {
-      context = new AnnotationConfigApplicationContext();
+      this.context = new AnnotationConfigApplicationContext();
       context.setParent(parent);
+
+      factory = context.getBeanFactory();
+      factory.addBeanPostProcessor(vertxSupportProcessor);
 
       try {
         Class<?> c = Class.forName(springConfig);
@@ -76,13 +82,9 @@ public class SpringMod extends BusModBase {
     context.refresh();
     context.start();
     context.registerShutdownHook();
-
-    super.start();
   }
 
-  protected void configure() {
-    // no-op
-  }
+  protected abstract void configure();
 
   @Override
   public void stop() throws Exception {
@@ -96,10 +98,6 @@ public class SpringMod extends BusModBase {
     }
 
     super.stop();
-  }
-
-  public ApplicationContext getContext() {
-    return context;
   }
 
 }
