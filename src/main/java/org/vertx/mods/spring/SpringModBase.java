@@ -87,7 +87,7 @@ public abstract class SpringModBase extends BusModBase {
     context.refresh();
     context.start();
     context.registerShutdownHook();
-    
+
     afterStartApplicationContext();
   }
 
