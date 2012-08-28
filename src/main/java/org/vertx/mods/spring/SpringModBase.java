@@ -40,6 +40,7 @@ public abstract class SpringModBase extends BusModBase {
 
     super.start();
 
+    // Make sure we're using the correct classloader
     Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
 
     Assert.notNull(getContainer().getConfig(), "config object is null, which can't be good");
@@ -58,6 +59,7 @@ public abstract class SpringModBase extends BusModBase {
     parent.refresh();
     parent.start();
 
+    // Detect whether this app is configured with an XML or @Configuration.
     if (springConfig.endsWith(".xml")) {
       this.context = new GenericXmlApplicationContext();
       context.setParent(parent);

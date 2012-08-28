@@ -16,20 +16,26 @@
 package org.vertx.mods.examples.beans;
 
 import org.springframework.beans.factory.InitializingBean;
-import org.vertx.mods.spring.VertxAware;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.vertx.java.core.Vertx;
 
 
 /**
  * @author swilliams
  *
  */
-public class EchoThree extends AbstractEcho implements InitializingBean, VertxAware {
+public class EchoAutowiredVertx extends AbstractEcho implements InitializingBean {
 
-  private static final String TEST_ADDRESS = "vertx-test-echo3";
+  private static final String TEST_ADDRESS = "vertx-test-echo2";
 
   @Override
   public void afterPropertiesSet() throws Exception {
     super.register(TEST_ADDRESS);
+  }
+
+  @Autowired
+  public void setVertx(Vertx vertx) {
+    super.setVertx(vertx);
   }
 
 }

@@ -25,17 +25,17 @@ public class SpringModTest extends VertxTestBase {
   }
 
   @Test
-  public void testEchoOne() throws Exception {
+  public void testPropertyInjection() throws Exception {
     testEventBus("vertx-test-echo1");
   }
 
   @Test
-  public void testEchoTwo() throws Exception {
+  public void testAutowireInjection() throws Exception {
     testEventBus("vertx-test-echo2");
   }
 
   @Test
-  public void testEchoThree() throws Exception {
+  public void testVertxAware() throws Exception {
     testEventBus("vertx-test-echo3");
   }
 

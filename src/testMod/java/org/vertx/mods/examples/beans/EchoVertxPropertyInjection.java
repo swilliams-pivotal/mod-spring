@@ -22,7 +22,7 @@ import org.springframework.beans.factory.InitializingBean;
  * @author swilliams
  *
  */
-public class EchoOne extends AbstractEcho implements InitializingBean {
+public class EchoVertxPropertyInjection extends AbstractEcho implements InitializingBean {
 
   private static final String TEST_ADDRESS = "vertx-test-echo1";
 
