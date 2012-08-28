@@ -18,23 +18,9 @@ load('test_utils.js')
 load('vertx.js')
 
 var tu = new TestUtils();
-var eb = vertx.eventBus;
 
-function testSpring() {
-  var msg = {
-    body: 'this is the body'
-  }
-
-  eb.send("test", msg, function(msg) {
-    tu.azzert(msg.status == 'ok');
-    tu.testComplete(  );
-  });
-}
-
-tu.registerTests(this);
-
-var config = {springConfig: 'testConfig.xml'}
-var modID = vertx.deployModule('spring-v1.0', config, 1, function() {
+var config = {springConfig: 'applicationConfig.xml'}
+var modID = vertx.deployModule('example.test-mod-spring-v1.0', config, 1, function() {
   tu.appReady();
 });
 

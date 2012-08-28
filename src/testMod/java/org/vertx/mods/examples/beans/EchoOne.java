@@ -13,29 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vertx.mods.spring.beans;
+package org.vertx.mods.examples.beans;
 
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.vertx.java.core.Vertx;
 
 
 /**
  * @author swilliams
  *
  */
-public class EchoTwo extends AbstractEcho implements InitializingBean {
+public class EchoOne extends AbstractEcho implements InitializingBean {
 
-  private static final String TEST_ADDRESS = "vertx-test-echo2";
+  private static final String TEST_ADDRESS = "vertx-test-echo1";
 
   @Override
   public void afterPropertiesSet() throws Exception {
     super.register(TEST_ADDRESS);
-  }
-
-  @Autowired
-  public void setVertx(Vertx vertx) {
-    super.setVertx(vertx);
   }
 
 }

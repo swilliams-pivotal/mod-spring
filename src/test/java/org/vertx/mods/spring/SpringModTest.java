@@ -14,7 +14,7 @@ import org.vertx.java.test.junit.support.VertxTestBase;
 
 
 @RunWith(VertxConfigurableJUnit4Runner.class)
-@TestVerticle(main="test_verticle0.js")
+@TestVerticle(main="test_deployer.js")
 public class SpringModTest extends VertxTestBase {
 
   private static final String QUESTION = "Is there anybody there?";

@@ -17,4 +17,4 @@
  * @author swilliams
  *
  */
-package org.vertx.mods.spring.beans;
+package org.vertx.mods.examples.beans;

@@ -82,7 +82,7 @@ task copyMod(type:Copy, dependsOn: 'classes') {
 }
 
 task copyTestMod(type:Copy, dependsOn: 'testModClasses') {
-  into "build/mod/vertx.test-spring-v1.0"
+  into "build/mod/example.test-mod-spring-v1.0"
   from 'build/classes/testMod'
   from 'build/resources/testMod'
   from 'src/testMod/conf'

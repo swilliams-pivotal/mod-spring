@@ -17,6 +17,7 @@ package org.vertx.mods.spring;
 
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.GenericXmlApplicationContext;
@@ -35,7 +36,7 @@ public abstract class SpringModBase extends BusModBase {
   private GenericApplicationContext context;
 
   @Override
-  public void start() {
+  public final void start() {
 
     super.start();
 
@@ -74,17 +75,25 @@ public abstract class SpringModBase extends BusModBase {
     factory = context.getBeanFactory();
     factory.addBeanPostProcessor(vertxSupportProcessor);
 
-    configure();
+    beforeStartApplicationContext();
 
     context.refresh();
     context.start();
     context.registerShutdownHook();
+    
+    afterStartApplicationContext();
   }
 
-  protected abstract void configure();
+  protected abstract void beforeStartApplicationContext();
+
+  protected abstract void afterStartApplicationContext();
+
+  protected ApplicationContext getApplicationContext() {
+    return context;
+  }
 
   @Override
-  public void stop() throws Exception {
+  public final void stop() throws Exception {
 
     if (context != null) {
       context.close();

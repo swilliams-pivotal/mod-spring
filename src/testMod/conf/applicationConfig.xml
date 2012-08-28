@@ -25,12 +25,12 @@
 
   <context:annotation-config/>
 
-  <context:component-scan base-package="org.vertx.mods.spring.beans"/>
+  <context:component-scan base-package="org.vertx.mods.examples.beans"/>
 
-  <bean id="echo-one" class="org.vertx.mods.spring.beans.EchoOne" p:vertx-ref="vertx"></bean>
+  <bean id="echo-one" class="org.vertx.mods.examples.beans.EchoOne" p:vertx-ref="vertx"></bean>
 
-  <bean id="echo-two" class="org.vertx.mods.spring.beans.EchoTwo"></bean>
+  <bean id="echo-two" class="org.vertx.mods.examples.beans.EchoTwo"></bean>
 
-  <bean id="echo-three" class="org.vertx.mods.spring.beans.EchoThree"></bean>
+  <bean id="echo-three" class="org.vertx.mods.examples.beans.EchoThree"></bean>
 
 </beans>

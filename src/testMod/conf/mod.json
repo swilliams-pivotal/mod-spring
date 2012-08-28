@@ -1,4 +1,4 @@
 {
   "main": "org.vertx.mods.spring.SpringMod",
-  "includes":"vertx.spring-v1.0"
+  "includes": "vertx.spring-v1.0"
 }

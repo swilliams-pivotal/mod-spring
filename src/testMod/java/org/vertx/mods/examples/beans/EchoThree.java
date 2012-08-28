@@ -13,18 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.vertx.mods.spring.beans;
+package org.vertx.mods.examples.beans;
 
 import org.springframework.beans.factory.InitializingBean;
+import org.vertx.mods.spring.VertxAware;
 
 
 /**
  * @author swilliams
  *
  */
-public class EchoOne extends AbstractEcho implements InitializingBean {
+public class EchoThree extends AbstractEcho implements InitializingBean, VertxAware {
 
-  private static final String TEST_ADDRESS = "vertx-test-echo1";
+  private static final String TEST_ADDRESS = "vertx-test-echo3";
 
   @Override
   public void afterPropertiesSet() throws Exception {
