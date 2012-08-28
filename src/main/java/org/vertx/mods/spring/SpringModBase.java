@@ -57,17 +57,11 @@ public abstract class SpringModBase extends BusModBase {
       this.context = new GenericXmlApplicationContext();
       context.setParent(parent);
 
-      factory = context.getBeanFactory();
-      factory.addBeanPostProcessor(vertxSupportProcessor);
-
       ((GenericXmlApplicationContext) context).load(springConfig);
     }
     else {
       this.context = new AnnotationConfigApplicationContext();
       context.setParent(parent);
-
-      factory = context.getBeanFactory();
-      factory.addBeanPostProcessor(vertxSupportProcessor);
 
       try {
         Class<?> c = Class.forName(springConfig);
@@ -76,6 +70,9 @@ public abstract class SpringModBase extends BusModBase {
         throw new IllegalArgumentException(e);
       }
     }
+
+    factory = context.getBeanFactory();
+    factory.addBeanPostProcessor(vertxSupportProcessor);
 
     configure();
 
