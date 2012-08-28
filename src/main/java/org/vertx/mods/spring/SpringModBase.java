@@ -45,11 +45,15 @@ public abstract class SpringModBase extends BusModBase {
     Assert.notNull(getContainer().getConfig(), "config object is null, which can't be good");
     String springConfig = getContainer().getConfig().getString("springConfig", "applicationConfig.xml");
 
-    BeanPostProcessor vertxSupportProcessor = new VertxAwareBeanPostProcessor(vertx);
+    // Looks weird but avoids doing this twice below in the if/else block.
+    // the vertx singleton needs to be registered before the context XML
+    // is loaded or annotated @Configuration class is registered
+    //.
+    // I also like the analogy of the vertx instance being in a parent
+    // context, as it's not instantiated in the context you really use.
     this.parent = new GenericApplicationContext();
     ConfigurableListableBeanFactory factory = parent.getBeanFactory();
     factory.registerSingleton("vertx", vertx);
-    factory.addBeanPostProcessor(vertxSupportProcessor);
 
     parent.refresh();
     parent.start();
@@ -73,6 +77,7 @@ public abstract class SpringModBase extends BusModBase {
     }
 
     factory = context.getBeanFactory();
+    BeanPostProcessor vertxSupportProcessor = new VertxAwareBeanPostProcessor(vertx);
     factory.addBeanPostProcessor(vertxSupportProcessor);
 
     beforeStartApplicationContext();

@@ -42,7 +42,7 @@ public class SpringModTest extends VertxTestBase {
 
   private void testEventBus(String address) throws Exception {
 
-    final long timeout = 5000L;
+    final long timeout = 2000L;
     final TimeUnit timeUnit = TimeUnit.MILLISECONDS;
     final LinkedBlockingQueue<String> queue = new LinkedBlockingQueue<>();
 
