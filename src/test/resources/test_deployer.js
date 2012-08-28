@@ -19,7 +19,7 @@ load('vertx.js')
 
 var tu = new TestUtils();
 
-var config = {springConfig: 'applicationConfig.xml'}
+var config = {springConfig: 'testConfig.xml'}
 var modID = vertx.deployModule('example.test-mod-spring-v1.0', config, 1, function() {
   tu.appReady();
 });
