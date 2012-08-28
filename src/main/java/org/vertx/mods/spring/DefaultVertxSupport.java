@@ -22,7 +22,7 @@ import org.vertx.java.core.Vertx;
  * @author swilliams
  *
  */
-public class DefaultVertxSupport implements VertxSupport {
+public class DefaultVertxSupport implements VertxAware {
 
   private Vertx vertx;
 

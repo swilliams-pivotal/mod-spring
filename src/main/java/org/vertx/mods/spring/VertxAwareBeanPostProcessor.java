@@ -4,11 +4,11 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.vertx.java.core.Vertx;
 
-public class VertxSupportProcessor implements BeanPostProcessor {
+public class VertxAwareBeanPostProcessor implements BeanPostProcessor {
 
   private Vertx vertx;
 
-  public VertxSupportProcessor(Vertx vertx) {
+  public VertxAwareBeanPostProcessor(Vertx vertx) {
     this.vertx = vertx;
   }
 
@@ -16,8 +16,8 @@ public class VertxSupportProcessor implements BeanPostProcessor {
   public Object postProcessBeforeInitialization(Object bean, String beanName)
       throws BeansException {
 
-    if (bean instanceof VertxSupport) {
-      VertxSupport vertxSupport = (VertxSupport) bean;
+    if (bean instanceof VertxAware) {
+      VertxAware vertxSupport = (VertxAware) bean;
       vertxSupport.setVertx(vertx);
       return vertxSupport;
     }

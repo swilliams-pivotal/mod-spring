@@ -44,7 +44,7 @@ public abstract class SpringModBase extends BusModBase {
     Assert.notNull(getContainer().getConfig(), "config object is null, which can't be good");
     String springConfig = getContainer().getConfig().getString("springConfig", "applicationConfig.xml");
 
-    BeanPostProcessor vertxSupportProcessor = new VertxSupportProcessor(vertx);
+    BeanPostProcessor vertxSupportProcessor = new VertxAwareBeanPostProcessor(vertx);
     this.parent = new GenericApplicationContext();
     ConfigurableListableBeanFactory factory = parent.getBeanFactory();
     factory.registerSingleton("vertx", vertx);

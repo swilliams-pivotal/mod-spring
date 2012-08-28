@@ -16,14 +16,14 @@
 package org.vertx.mods.spring.beans;
 
 import org.springframework.beans.factory.InitializingBean;
-import org.vertx.mods.spring.VertxSupport;
+import org.vertx.mods.spring.VertxAware;
 
 
 /**
  * @author swilliams
  *
  */
-public class EchoThree extends AbstractEcho implements InitializingBean, VertxSupport {
+public class EchoThree extends AbstractEcho implements InitializingBean, VertxAware {
 
   private static final String TEST_ADDRESS = "vertx-test-echo3";
 

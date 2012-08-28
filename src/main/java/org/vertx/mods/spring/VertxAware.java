@@ -22,7 +22,7 @@ import org.vertx.java.core.Vertx;
  * @author swilliams
  *
  */
-public interface VertxSupport {
+public interface VertxAware {
 
   Vertx getVertx();
 
