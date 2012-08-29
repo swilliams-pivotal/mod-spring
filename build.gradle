@@ -52,11 +52,8 @@ dependencies {
   provided "org.vert-x:vertx-core:$vertxVersion"
   provided "org.vert-x:vertx-platform:$vertxVersion"
 
-  compile "org.springframework:spring-beans:$springVersion"
   compile "org.springframework:spring-core:$springVersion"
   compile "org.springframework:spring-context:$springVersion"
-  compile "org.springframework:spring-context-support:$springVersion"
-  compile "org.springframework:spring-expression:$springVersion"
 
   testCompile "org.vert-x:vertx-lang-java:$vertxVersion"
   testCompile "org.vert-x:vertx-lang-rhino:$vertxVersion"
@@ -86,7 +83,7 @@ task copyTestMod(type:Copy, dependsOn: 'testModClasses') {
   from 'build/classes/testMod'
   from 'build/resources/testMod'
   from 'src/testMod/conf'
-  into( 'lib' ) {
+  into('lib') {
     from configurations.testMod
   }
 }
@@ -97,7 +94,9 @@ task dist(type: Zip, dependsOn: 'copyMod') {
   description = "Assembles a vert.x module in 'mod.zip' format"
   destinationDir = project.file('build/libs')
   archiveName = 'mod.zip'
-  from project.file("build/mod")
+  from("build/mod") {
+    exclude '*example*'
+  }
 }
 
 task prepareVertxTest(type: Sync, dependsOn: ['copyMod', 'copyTestMod'] ) {
