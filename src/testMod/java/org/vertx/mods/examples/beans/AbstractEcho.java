@@ -33,18 +33,14 @@ public abstract class AbstractEcho implements DisposableBean {
   private Vertx vertx;
 
   protected void register(String address) throws Exception {
-    Assert.notNull(getVertx(), "Vertx must not be null");
+    Assert.notNull(vertx, "Vertx must not be null");
 
-    this.handlerId = getVertx().eventBus().registerHandler(address, new Handler<Message<String>>() {
+    this.handlerId = vertx.eventBus().registerHandler(address, new Handler<Message<String>>() {
 
       @Override
       public void handle(Message<String> event) {
         event.reply(event.body);
       }});
-  }
-
-  public Vertx getVertx() {
-    return vertx;
   }
 
   public void setVertx(Vertx vertx) {
@@ -54,7 +50,7 @@ public abstract class AbstractEcho implements DisposableBean {
 
   @Override
   public void destroy() throws Exception {
-    getVertx().eventBus().unregisterHandler(handlerId);
+    vertx.eventBus().unregisterHandler(handlerId);
   }
 
 }

@@ -15,16 +15,11 @@
  */
 package org.vertx.mods.spring;
 
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
-
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.vertx.java.test.junit.VertxConfigurableJUnit4Runner;
 import org.vertx.java.test.junit.annotations.TestVerticle;
-import org.vertx.java.test.junit.support.QueueReplyHandler;
 import org.vertx.java.test.junit.support.VertxTestBase;
 
 
@@ -36,41 +31,22 @@ public class SpringModTest extends VertxTestBase {
 
   @Before
   public void setup() {
-    sleep(1000L);
+    sleep(1000L); // Still needs a delay for some reason
   }
 
   @Test
   public void testPropertyInjection() throws Exception {
-    testEventBus("vertx-test-echo1");
+    testMessageEcho("vertx-test-echo1", QUESTION);
   }
 
   @Test
   public void testAutowireInjection() throws Exception {
-    testEventBus("vertx-test-echo2");
+    testMessageEcho("vertx-test-echo2", QUESTION);
   }
 
   @Test
   public void testVertxAware() throws Exception {
-    testEventBus("vertx-test-echo3");
-  }
-
-
-  private void testEventBus(String address) throws Exception {
-
-    final long timeout = 2000L;
-    final TimeUnit timeUnit = TimeUnit.MILLISECONDS;
-    final LinkedBlockingQueue<String> queue = new LinkedBlockingQueue<>();
-
-    getVertx().eventBus().send(address, QUESTION, new QueueReplyHandler<String>(queue, timeout, timeUnit));
-
-    try {
-      String answer = queue.poll(timeout, timeUnit);
-      System.out.printf("For %s Q:%s A:%s %n", address, answer, QUESTION.equals(answer));
-      Assert.assertTrue(QUESTION.equals(answer));
-
-    } catch (InterruptedException e) {
-      //
-    }
+    testMessageEcho("vertx-test-echo3", QUESTION);
   }
 
 }

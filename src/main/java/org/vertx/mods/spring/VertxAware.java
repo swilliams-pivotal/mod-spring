@@ -24,8 +24,6 @@ import org.vertx.java.core.Vertx;
  */
 public interface VertxAware {
 
-  Vertx getVertx();
-
   void setVertx(Vertx vertx);
 
 }
