@@ -48,8 +48,8 @@ public abstract class SpringModBase extends BusModBase {
 
     // Looks weird but avoids doing this twice below in the if/else block.
     // the vertx singleton needs to be registered before the context XML
-    // is loaded or annotated @Configuration class is registered
-    //.
+    // is loaded or annotated @Configuration class is registered.
+    //
     // I also like the analogy of the vertx instance being in a parent
     // context, as it's not instantiated in the context you really use.
     this.parent = new GenericApplicationContext();
