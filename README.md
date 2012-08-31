@@ -2,6 +2,10 @@
 
 A non-runnable Spring support Module for vert.x.
 
+## Download 
+
+A download is available for testing at: [mod.zip](https://github.com/swilliams-vmw/mod-spring/downloads "mod.zip download for vertx.spring-v.10")
+
 ## HowTo use mod-spring
 
 1. Specify mod-spring as an include, in your own module's mod.json:
