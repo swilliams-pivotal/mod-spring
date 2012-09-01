@@ -31,7 +31,7 @@ public class SpringModTest extends VertxTestBase {
 
   @Before
   public void setup() {
-    sleep(1000L); // Still needs a delay for some reason
+    lightSleep(1000L); // Still needs a delay for some reason
   }
 
   @Test
