@@ -18,12 +18,12 @@ package org.vertx.mods.spring;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.vertx.java.test.junit.VertxConfigurationJUnit4Runner;
-import org.vertx.java.test.junit.annotations.TestVerticle;
-import org.vertx.java.test.junit.support.VertxTestBase;
+import org.vertx.java.test.junit.VertxJUnit4ClassRunner;
+import org.vertx.java.test.TestVerticle;
+import org.vertx.java.test.VertxTestBase;
 
 
-@RunWith(VertxConfigurationJUnit4Runner.class)
+@RunWith(VertxJUnit4ClassRunner.class)
 @TestVerticle(main="test_deployer.js")
 public class SpringModTest extends VertxTestBase {
 
