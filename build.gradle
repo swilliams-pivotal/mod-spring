@@ -39,9 +39,8 @@ sourceSets {
 }
 
 repositories {
-  maven { url 'http://repo.springsource.org/release' }
+  maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }  maven { url 'http://repo.springsource.org/release' }
   mavenCentral()
-  mavenLocal()
 }
 
 dependencies {
@@ -61,7 +60,7 @@ dependencies {
   testCompile "org.springframework:spring-expression:$springVersion"
   testCompile "org.springframework:spring-test:$springVersion"
 
-  testCompile "org.vert-x:vertx-junit-annotations:1.0"
+  testCompile "org.vert-x:vertx-junit-annotations:$junitAnnoVersion"
   testCompile "org.vert-x:vertx-lang-java:$vertxVersion"
   testCompile "org.vert-x:vertx-lang-rhino:$vertxVersion"
   testCompile("org.vert-x:vertx-testframework:$vertxVersion") {
